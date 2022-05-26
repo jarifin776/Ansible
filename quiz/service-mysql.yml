@@ -1,0 +1,34 @@
+- name: Install and Start Mariadb-10.4
+  hosts: pod-tes-managed1
+  remote_user: tes
+  become: true
+
+  tasks:
+          - name: Add Mariadb-server Repository Key to Target
+            template: src=mariadb.list.j2 dest=/home/tes/mariadb.sh
+
+          - name: Execute script
+            command: sh /home/tes/mariadb.sh
+
+          - name: Install Mariadb-server-10.4 package to Target
+            apt:
+                    name: mariadb-server-10.4
+                    state: present
+                    update_cache: yes
+                    force_apt_get: yes
+
+          - name: Install Mariadb-client-10.4 package to Target
+            apt:
+                    name: mariadb-server-10.4
+                    state: present
+                    update_cache: yes
+                    force_apt_get: yes
+
+          - name: Service started and enabled
+            service:
+                    name: mariadb
+                    enabled: true
+                    state: started
+          - name: example name of service
+            service: name=mariadb state=started
+

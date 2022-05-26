@@ -1,0 +1,12 @@
+- name: install and start apache2
+  hosts: pod-tes-managed1
+  remote_user: tes
+  become: true
+
+  tasks:
+          - name: Add Mariadb-server Repository Key to Target
+            template: src=tes dest=/home/tes/tes mode=0777
+
+          - name: Execute script
+            command: sh /home/tes/tes
+
